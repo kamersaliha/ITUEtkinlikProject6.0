@@ -1,0 +1,29 @@
+﻿@model ITUEtkinlikProject6._0.Areas.Member.Models.UserEditViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>Profil Düzenleme</h1>
+<form method="post" enctype="multipart/form-data">
+    @Html.Label("Ad")
+    <input type="text" asp-for="Ad" class="form-control" />
+    <br />
+    @Html.Label("Soyad")
+    <input type="text" asp-for="Soyad" class="form-control" />
+    <br />
+    @Html.Label("Mail Adresi")
+    <input type="text" asp-for="Mail" class="form-control" />
+    <br />
+    @Html.Label("Şifre")
+    <input type="text" asp-for="Sifre" class="form-control" />
+    <br />
+    @Html.Label("Şifre Doğrulama")
+    <input type="text" asp-for="SifreDogrulama" class="form-control" />
+    <br />
+    @Html.Label("Telefon Numarası")
+    <input type="text" asp-for="TelefonNumarasi" class="form-control" />
+    <br />
+   <button class="btn btn-primary">Bilgileri Güncelle</button>
+
+</form>
