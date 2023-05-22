@@ -12,6 +12,8 @@ namespace EntityLayer.Concrete
     {
         public int KampusId { get; set; }
 
+        public ICollection<YayinTalebi> YayinTalepleri { get; set; }
+
         public ICollection<Salon> Salonlar { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]

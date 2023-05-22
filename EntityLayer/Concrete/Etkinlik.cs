@@ -20,18 +20,15 @@ namespace EntityLayer.Concrete
         public int KatilimciSayisi { get; set; }
         public int KategoriId { get; set; }
         public virtual Kategori Kategoriler { get; set; }
-        public bool Durumu { get; set; }
+        public Durumlar Durumu { get; set; }
         public string EtkinlikAciklamasi { get; set; }
 
         [Column(TypeName = "nvarchar(200)")]
         public string EtkinlikAciklamasiKisa { get; set; }       
-        public bool UcretBilgisi { get; set; }
+        public string UcretBilgisi { get; set; }
         public DateTime BaslangicTarihi { get; set; }
         public DateTime BitisTarihi { get; set; }
         public string Resim { get; set; }
         public string EtkinlikSorumlusu { get; set; }
-
-
     }
-    
 }

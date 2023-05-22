@@ -1,4 +1,10 @@
-﻿<section class="w3l-main-slider" id="home">
+﻿@model List<EtkinlikKategoriViewModel>
+
+@{
+    var kategoriler = Model.First();
+}
+
+<section class="w3l-main-slider" id="home">
     <div class="banner-content">
         <div id="demo-1"
              data-zs-src='["/Traversal-Starter/assets/images/banner1.jpg", "/Traversal-Starter/assets/images/banner2.jpg","/Traversal-Starter/assets/images/banner3.jpg", "/Traversal-Starter/assets/images/banner4.jpg"]'
@@ -6,23 +12,20 @@
             <div class="demo-inner-content">
                 <div class="container">
                     <div class="banner-infhny">
-                        <h3>You don't need to go far to find what matters.</h3>
-                        <h6 class="mb-3">Discover your next adventure</h6>
+                        <h3>Etkinlik oluşturabilir, etkinlikleri görebilirsiniz.</h3>
+                        <h6 class="mb-3">Bütün etkinlikler tek sitede</h6>
                         <div class="flex-wrap search-wthree-field mt-md-5 mt-4">
                             <form action="#" method="post" class="booking-form">
                                 <div class="row book-form">
                                     <div class="form-input col-md-4 mt-md-0 mt-3">
-
-                                        <select name="selectpicker" class="selectpicker">
-                                            <option value="">Etkinlik Kategorileri</option>
-                                            <option value="africa">Africa</option>
-                                            <option value="america">America</option>
-                                            <option value="asia">Asia</option>
-                                            <option value="eastern-europe">Eastern Europe</option>
-                                            <option value="europe">Europe</option>
-                                            <option value="south-america">South America</option>
-                                        </select>
-
+                                      
+                      <select name="selectpicker" class="selectpicker">
+                                            <option selected>Etkinlik Kategorileri</option>
+                                                @foreach (var kategori in kategoriler.Kategoriler)
+                                                {
+                                     <option value="@kategori.KategoriId">@kategori.KategoriAdi</option>
+                                                }
+                                            </select>                                                                         
                                     </div>
                                     <div class="form-input col-md-4 mt-md-0 mt-3">
 

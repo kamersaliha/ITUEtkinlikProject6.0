@@ -1,3 +1,4 @@
+using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
@@ -21,9 +22,23 @@ namespace ITUEtkinlikProject6._0
 			builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
 			builder.Services.AddControllersWithViews();
 
-            //builder.Services.AddSingleton<IEtkinlikDal, EfEtkinlikDal>();
+            builder.Services.AddSingleton<IYayinTalebiService, YayinTalebiManager>();
+            builder.Services.AddSingleton<IYayinTalebiDal, EfYayinTalebiDal>();
 
-			builder.Services.AddMvc(config =>
+            //builder.Services.AddSingleton<IKampusService, YayinTalebiManager>(); //Buranýn hata vermesinin sebebi IKampusService'dan inherit almamasý !!
+            builder.Services.AddSingleton<IKampusService, KampusManager>();
+            builder.Services.AddSingleton<IKampusDal, EfKampusDal>();
+
+            builder.Services.AddSingleton<IKategoriService, KategoriManager>();
+            builder.Services.AddSingleton<IKategoriDal, EfKategoriDal>();
+
+            builder.Services.AddSingleton<ISalonService, SalonManager>();
+            builder.Services.AddSingleton<ISalonDal, EfSalonDal>();
+
+            builder.Services.AddSingleton<IEtkinlikService, EtkinlikManager>();
+            builder.Services.AddSingleton<IEtkinlikDal, EfEtkinlikDal>();
+
+            builder.Services.AddMvc(config =>
 			{
 				var policy = new AuthorizationPolicyBuilder()
 				.RequireAuthenticatedUser()
@@ -51,7 +66,7 @@ namespace ITUEtkinlikProject6._0
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");           
+                pattern: "{controller=Default}/{action=Index}/{id?}");           
 
             app.UseEndpoints(endpoints =>
             {

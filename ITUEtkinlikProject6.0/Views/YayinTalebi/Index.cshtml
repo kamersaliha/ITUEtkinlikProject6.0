@@ -1,7 +1,7 @@
 ﻿@model YayinTalebiViewModel
 @{
-    ViewData["Title"] = "NewYayinTalebi";
-    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
 }
 
 <h1>Yayın Talebi</h1>
@@ -26,8 +26,8 @@
     <div class="form-group">
         <div>Etkinlik Salonu</div>
         <select asp-for="YayinTalebi.SalonId" id="Salonlar" class="form-select" aria-label="Default select example">
-                <option selected>Lütfen Önce Kampüs Seçiniz</option>
-            </select>
+            <option selected>Lütfen Önce Kampus Seçiniz</option>
+        </select>
     </div>
     <div class="form-group">
         <div class="dropdown show">
@@ -72,3 +72,4 @@
 </form>
 
 <script src="~/js/yayintalebi.js"></script>
+

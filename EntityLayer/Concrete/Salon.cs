@@ -10,15 +10,20 @@ namespace EntityLayer.Concrete
 {
     public class Salon
     {
-        public ICollection<Etkinlik> Etkinlikler { get; set; }
+        public virtual ICollection<Etkinlik> Etkinlikler { get; set; }
+        public virtual ICollection<YayinTalebi> YayinTalepleri { get; set; }
 
         [Key]
         public int SalonId { get; set; }
+
         public int KampusId { get; set; }
+
+        [ForeignKey("KampusId")]
         public virtual Kampus Kampusler { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
         public string SalonAdi { get; set; }
+
         public int SalonKapasitesi { get; set; }
     }
 }

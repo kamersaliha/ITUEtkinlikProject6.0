@@ -4,6 +4,7 @@ using DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230505014426_mig_new_new")]
+    partial class mig_new_new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,8 +144,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<DateTime>("BitisTarihi")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Durumu")
-                        .HasColumnType("int");
+                    b.Property<string>("Durumu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EtkinlikAciklamasi")
                         .IsRequired()
@@ -174,9 +177,8 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("SalonId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UcretBilgisi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("UcretBilgisi")
+                        .HasColumnType("bit");
 
                     b.HasKey("EtkinlikId");
 
@@ -295,51 +297,50 @@ namespace DataAccessLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("YayinTalebiId"), 1L, 1);
 
-                    b.Property<int?>("AppUserId")
+                    b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("BaslangicTarihi")
+                    b.Property<DateTime>("BaslangicTarihi")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("BitisTarihi")
+                    b.Property<DateTime>("BitisTarihi")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Durumu")
-                        .HasColumnType("int");
+                    b.Property<string>("Durumu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EtkinlikAciklamasi")
+                        .IsRequired()
                         .HasColumnType("nvarchar(600)");
 
                     b.Property<string>("EtkinlikAciklamasiKisa")
+                        .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("EtkinlikAdi")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("KampusId")
-                        .HasColumnType("int");
-
                     b.Property<int>("KategoriId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("KatilimciSayisi")
+                    b.Property<int>("KatilimciSayisi")
                         .HasColumnType("int");
 
                     b.Property<string>("Resim")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SalonId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UcretBilgisi")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("UcretBilgisi")
+                        .HasColumnType("bit");
 
                     b.HasKey("YayinTalebiId");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("KampusId");
 
                     b.HasIndex("KategoriId");
 
@@ -483,13 +484,9 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("EntityLayer.Concrete.YayinTalebi", b =>
                 {
-                    b.HasOne("EntityLayer.Concrete.AppUser", null)
+                    b.HasOne("EntityLayer.Concrete.AppUser", "AppUsers")
                         .WithMany("YayinTalepleri")
-                        .HasForeignKey("AppUserId");
-
-                    b.HasOne("EntityLayer.Concrete.Kampus", "Kampus")
-                        .WithMany("YayinTalepleri")
-                        .HasForeignKey("KampusId")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -505,7 +502,7 @@ namespace DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Kampus");
+                    b.Navigation("AppUsers");
 
                     b.Navigation("Kategoriler");
 
@@ -571,8 +568,6 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("EntityLayer.Concrete.Kampus", b =>
                 {
                     b.Navigation("Salonlar");
-
-                    b.Navigation("YayinTalepleri");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Kategori", b =>

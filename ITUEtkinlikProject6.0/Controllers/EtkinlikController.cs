@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
@@ -9,17 +10,22 @@ namespace ITUEtkinlikProject6._0.Controllers
 	[AllowAnonymous]
 	public class EtkinlikController : Controller
     {
-        EtkinlikManager etkinlikManager = new EtkinlikManager(new EfEtkinlikDal());
+        IEtkinlikService _etkinlikService;
+        public EtkinlikController(IEtkinlikService etkinlikService)
+        {
+            _etkinlikService = etkinlikService;
+        }
+
         public IActionResult Index()
         {
-            var values = etkinlikManager.TGetList();
+            var values = _etkinlikService.TGetList();
       
             return View(values);
         }
         [HttpGet]
         public IActionResult EtkinlikDetaylari(int id) 
         {
-            var values = etkinlikManager.TGetById(id);
+            var values = _etkinlikService.TGetById(id);
             return View(values);
         }
         [HttpPost]

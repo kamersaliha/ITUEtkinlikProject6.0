@@ -14,8 +14,9 @@ namespace EntityLayer.Concrete
         public int KategoriId { get; set; }
 
         public ICollection<Etkinlik> Etkinlikler { get; set; }
+        public ICollection<YayinTalebi> YayinTalepleri { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
-        public int KategoriAdi { get; set; }
+        public string KategoriAdi { get; set; }
     }
 }
