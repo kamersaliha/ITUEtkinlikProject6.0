@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -34,8 +35,35 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         }
         public IActionResult CurrentYayinTalebi()
         {
-            var values = _etkinlikService.TGetList();
-            return View(values);
+            var model = new List<YayinTalebiViewModel>();
+            var yayinTalepleri = _yayinTalebiService.TGetList();
+            var salonlar = _salonService.TGetList();
+            var kategoriler = _kategoriService.TGetList();
+
+
+            foreach (var yayintalebi in yayinTalepleri)
+            { 
+            var yayinTalebi = new YayinTalebiViewModel()
+            {
+                YayinTalepleri = yayinTalepleri,
+                Salonlar = salonlar,
+                Kategoriler = kategoriler,
+                YayinTalebiId = yayintalebi.YayinTalebiId,
+                EtkinlikAdi = yayintalebi.EtkinlikAdi,
+                SalonId = yayintalebi.SalonId,
+                SalonAdi= salonlar.FirstOrDefault(salon => salon.SalonId == yayintalebi.SalonId).SalonAdi,               
+                KategoriId = yayintalebi.KategoriId,
+                KategoriAdi = kategoriler.FirstOrDefault(kategoriler => kategoriler.KategoriId == yayintalebi.KategoriId).KategoriAdi,
+                KatilimciSayisi = yayintalebi.KatilimciSayisi,
+                EtkinlikAciklamasi = yayintalebi.EtkinlikAciklamasi,
+                EtkinlikAciklamasiKisa = yayintalebi.EtkinlikAciklamasiKisa,
+                BaslangicTarihi = yayintalebi.BaslangicTarihi,
+                BitisTarihi = yayintalebi.BitisTarihi,
+                Durum = yayintalebi.Durumu
+            };
+            model.Add(yayinTalebi);
+        }
+            return View(model);
         }
         public IActionResult OldYayinTalebi()
         {
@@ -45,6 +73,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         [HttpGet]
         public IActionResult NewYayinTalebi()
         {
+           
             var model = new YayinTalebiViewModel();
 
             List<Kampus> kampusler = _kampusService.TGetList();
@@ -54,6 +83,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             List<Kategori> kategoriler = _kategoriService.TGetList();
             
             model.Kategoriler = kategoriler;
+           
 
             return View(model);
         }
@@ -70,7 +100,18 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                     break;
                 }
             }
-            
+
+            var validator = new YayinTalebiValidator();
+            var result = validator.Validate(p.YayinTalebi);
+            if (!result.IsValid)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.ErrorMessage);
+                }
+                return View(p);
+            }
+
             _yayinTalebiService.Tadd(p.YayinTalebi);
 
             return RedirectToAction("CurrentYayinTalebi");
@@ -80,9 +121,20 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         public JsonResult SalonlariGetir(string kampusId)
         {
             var filtrelenmisSalonlar = _salonService.TGetList().Where(x=> x.KampusId == Convert.ToInt32(kampusId)).ToList();
-
+            
             return Json(filtrelenmisSalonlar);
         }
+       
+        public ActionResult DeleteYayinTalebi(int yayinTalebiId)
+        {
+            YayinTalebi yayinTalebi = _yayinTalebiService.TGetList().FirstOrDefault(x => x.YayinTalebiId == yayinTalebiId);
 
+            if (yayinTalebi != null)
+            {
+                _yayinTalebiService.TDelete(yayinTalebi);              
+            }
+            return RedirectToAction("/YayinTalebi/CurrentYayinTalebi", new { Areas = "Member" });
+        }
+        //public IActionResult UpdateYayinTalebi(int yayinTalebiId)
     }
 }

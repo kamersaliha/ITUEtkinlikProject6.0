@@ -4,11 +4,23 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
+@*<script src="~/jquery/jquery.min.js"></script>
+<script src="~/jquery-validate/jquery.validate.min.js"></script>
+@*<script src="~/jquery-validate/localization/messages_tr.min.js"></script>
+@*<script>
+    $("#NewYayinTalebi").validate({
+        lang: 'tr'
+    });
+</script>*@
+@*<script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>*@
+
+
 <h1>Yayın Talebi</h1>
 <form method="post">
     <div class="form-group">
         <div>Etkinlik Adı</div>
         <input type="text" asp-for="YayinTalebi.EtkinlikAdi" class="form-control" />
+        <span asp-validation-for="YayinTalebi.EtkinlikAdi" class="text-danger"></span>
     </div>
     <div class="form-group">
         <div class="dropdown show">
@@ -28,6 +40,7 @@
         <select asp-for="YayinTalebi.SalonId" id="Salonlar" class="form-select" aria-label="Default select example">
                 <option selected>Lütfen Önce Kampüs Seçiniz</option>
             </select>
+        <span asp-validation-for="YayinTalebi.SalonId"></span>
     </div>
     <div class="form-group">
         <div class="dropdown show">
@@ -40,32 +53,38 @@
                     <option value="@kategori.KategoriId">@kategori.KategoriAdi</option>
                 }
             </select>
+            <span asp-validation-for="YayinTalebi.KategoriId"></span>
         </div>
     </div>
 
     <div class="form-group">
         <div>Katılımcı Sayısı</div>
         <input type="text" asp-for="YayinTalebi.KatilimciSayisi" class="form-control" />
+        <span asp-validation-for="YayinTalebi.KatilimciSayisi"></span>
     </div>
 
     <div class="form-group">
         <div>Başlangıç Tarihi</div>
         <input type="date" asp-for="YayinTalebi.BaslangicTarihi" class="form-control" />
+        <span asp-validation-for="YayinTalebi.BaslangicTarihi"></span>
     </div>
 
     <div class="form-group">
         <div>Bitiş Tarihi</div>
         <input type="date" asp-for="YayinTalebi.BitisTarihi" class="form-control" />
+        <span asp-validation-for="YayinTalebi.BitisTarihi"></span>
     </div>
 
     <div class="form-group">
         <div>Kısa Etkinlik Açıklaması</div>
         <input type="text" asp-for="YayinTalebi.EtkinlikAciklamasiKisa" class="form-control" />
+        <span asp-validation-for="YayinTalebi.EtkinlikAciklamasiKisa"></span>
     </div>
 
     <div class="form-group">
         <div> Etkinlik Açıklaması </div>
         <input type="text" asp-for="YayinTalebi.EtkinlikAciklamasi" class="form-control" />
+        <span asp-validation-for="YayinTalebi.EtkinlikAciklamasi"></span>
     </div>
 
     <button class="btn btn-outline-success">Etkinlik Oluştur</button>

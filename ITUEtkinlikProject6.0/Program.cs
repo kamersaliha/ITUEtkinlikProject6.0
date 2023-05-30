@@ -4,6 +4,7 @@ using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using FluentValidation.AspNetCore;
 using ITUEtkinlikProject6._0.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -20,7 +21,7 @@ namespace ITUEtkinlikProject6._0
             builder.Services.AddControllersWithViews();
 			builder.Services.AddDbContext<Context>();
 			builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
-			builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
 
             builder.Services.AddSingleton<IYayinTalebiService, YayinTalebiManager>();
             builder.Services.AddSingleton<IYayinTalebiDal, EfYayinTalebiDal>();
