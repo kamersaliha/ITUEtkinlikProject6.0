@@ -1,6 +1,7 @@
 ﻿using EntityLayer.Concrete;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Policy;
 
 namespace ITUEtkinlikProject6._0.Areas.Member.Models
 {
@@ -34,9 +35,11 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Models
 
         public string EtkinlikAciklamasiKisa { get; set; }
 
-        public DateTime? BaslangicTarihi { get; set; }
+        public DateTime BaslangicTarihi { get; set; }
 
-        public DateTime? BitisTarihi { get; set; }
+        public DateTime BitisTarihi { get; set; }
+
+        public string YayinTalebiIsAdd { get; set; }
 
     }
 }

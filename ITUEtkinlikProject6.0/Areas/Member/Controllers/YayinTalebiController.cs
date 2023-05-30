@@ -5,9 +5,11 @@ using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using ITUEtkinlikProject6._0.Areas.Member.Models;
+using ITUEtkinlikProject6._0.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using YayinTalebiViewModel = ITUEtkinlikProject6._0.Areas.Member.Models.YayinTalebiViewModel;
 
 namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
 {
@@ -57,8 +59,8 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                 KatilimciSayisi = yayintalebi.KatilimciSayisi,
                 EtkinlikAciklamasi = yayintalebi.EtkinlikAciklamasi,
                 EtkinlikAciklamasiKisa = yayintalebi.EtkinlikAciklamasiKisa,
-                BaslangicTarihi = yayintalebi.BaslangicTarihi,
-                BitisTarihi = yayintalebi.BitisTarihi,
+                BaslangicTarihi = (DateTime)yayintalebi.BaslangicTarihi,
+                BitisTarihi = (DateTime)yayintalebi.BitisTarihi,
                 Durum = yayintalebi.Durumu
             };
             model.Add(yayinTalebi);
@@ -83,7 +85,8 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             List<Kategori> kategoriler = _kategoriService.TGetList();
             
             model.Kategoriler = kategoriler;
-           
+
+            model.YayinTalebiIsAdd = "Ekle";
 
             return View(model);
         }
@@ -91,18 +94,26 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         [HttpPost]
         public IActionResult NewYayinTalebi(YayinTalebiViewModel p)
         {
+            var yayinTalebi = new YayinTalebi();
+             yayinTalebi.EtkinlikAciklamasi = p.EtkinlikAciklamasi;
+            yayinTalebi.EtkinlikAdi = p.EtkinlikAdi;
+            yayinTalebi.SalonId = p.SalonId;
+            yayinTalebi.EtkinlikAciklamasiKisa = p.EtkinlikAciklamasiKisa;
+            yayinTalebi.KategoriId = p.KategoriId;
+            yayinTalebi.KatilimciSayisi = p.KatilimciSayisi;
+            yayinTalebi.BaslangicTarihi = p.BaslangicTarihi;
 
             foreach (var salon in _salonService.TGetList())
             {
-                if (salon.SalonId == p.YayinTalebi.SalonId)
+                if (salon.SalonId == p.SalonId)
                 {
-                    p.YayinTalebi.KampusId = salon.KampusId;
+                    yayinTalebi.KampusId = salon.KampusId;
                     break;
                 }
             }
 
             var validator = new YayinTalebiValidator();
-            var result = validator.Validate(p.YayinTalebi);
+            var result = validator.Validate(yayinTalebi);
             if (!result.IsValid)
             {
                 foreach (var error in result.Errors)
@@ -112,9 +123,9 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                 return View(p);
             }
 
-            _yayinTalebiService.Tadd(p.YayinTalebi);
+            _yayinTalebiService.Tadd(yayinTalebi);
 
-            return RedirectToAction("CurrentYayinTalebi");
+            return RedirectToAction("member/CurrentYayinTalebi");
         }
 
         [HttpPost]
@@ -135,6 +146,42 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             }
             return RedirectToAction("/YayinTalebi/CurrentYayinTalebi", new { Areas = "Member" });
         }
-        //public IActionResult UpdateYayinTalebi(int yayinTalebiId)
+
+        [HttpGet]
+        public IActionResult UpdateYayinTalebi(int yayinTalebiId)
+        {
+            var yayinTalebi = _yayinTalebiService.TGetById(yayinTalebiId);
+            var model = new YayinTalebiViewModel()
+            {
+                EtkinlikAciklamasi = yayinTalebi.EtkinlikAciklamasi,
+                EtkinlikAciklamasiKisa = yayinTalebi.EtkinlikAciklamasiKisa,
+            };
+            model.Kampusler = _kampusService.TGetList();
+            model.YayinTalebiIsAdd = "Düzenle";
+            return View("NewYayinTalebi", model);
+        }
+        [HttpPost]
+        public IActionResult UpdateYayinTalebi(YayinTalebiViewModel yayinTalebiCommand)
+        {
+           var yayinTalebi =  _yayinTalebiService.TGetList().FirstOrDefault(x => x.YayinTalebiId == yayinTalebiCommand.YayinTalebiId);
+            yayinTalebi.KatilimciSayisi = yayinTalebiCommand.KatilimciSayisi;
+            yayinTalebi.BitisTarihi = yayinTalebiCommand.BitisTarihi;
+            yayinTalebi.BaslangicTarihi = yayinTalebiCommand.BaslangicTarihi;
+            yayinTalebi.EtkinlikAciklamasi = yayinTalebiCommand.EtkinlikAciklamasi;
+            yayinTalebi.EtkinlikAciklamasiKisa = yayinTalebiCommand.EtkinlikAciklamasiKisa;
+            yayinTalebi.SalonId = yayinTalebiCommand.SalonId;
+            yayinTalebi.KategoriId = yayinTalebiCommand.KategoriId;
+
+            foreach (var salon in _salonService.TGetList())
+            {
+                if (salon.SalonId == yayinTalebiCommand.SalonId)
+                {
+                    yayinTalebi.KampusId = salon.KampusId;
+                    break;
+                }
+            }
+            _yayinTalebiService.TUpdate(yayinTalebi);
+            return View("CurrentYayinTalebi");
+        }
     }
 }
