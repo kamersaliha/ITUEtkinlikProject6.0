@@ -3,7 +3,7 @@
     ViewData["Title"] = "NewYayinTalebi";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
     var isAddMode = Model.YayinTalebiIsAdd;
-    var action = isAddMode == "Ekle" ? "NewYayinTalebi" : "updateyayintalebi";
+    var action = isAddMode == "Ekle" ? "NewYayinTalebi" : "UpdateYayinTalebi";
 }
 
 
@@ -21,7 +21,7 @@
             <div> Etkinlik Kampüsü</div>
             <br />
             <select onchange="KampusSec.salonAdiGetir(this);" class="form-select" aria-label="Default select example">
-                <option selected>Kampüs Seçiniz</option>
+                <option value="@Model.KampusAdi" selected>Kampüs Seçiniz</option>
                 @foreach (var kampus in Model.Kampusler)
                 {
                     <option value="@kampus.KampusId">@kampus.KampusAdi</option>
@@ -32,7 +32,7 @@
     <div class="form-group">
         <div>Etkinlik Salonu</div>
         <select asp-for="SalonId" id="Salonlar" class="form-select" aria-label="Default select example">
-                <option selected>Lütfen Önce Kampüs Seçiniz</option>
+                <option value="@Model.SalonAdi" selected>Lütfen Önce Kampüs Seçiniz</option>
             </select>
         <span asp-validation-for="SalonId"></span>
     </div>
@@ -41,7 +41,7 @@
             <div>Kategoriler</div>
             <br />
             <select asp-for="KategoriId" class="form-select" aria-label="Default select example">
-                <option selected>Kategori Seçiniz</option>
+                <option value="@Model.KategoriAdi" selected>Kategori Seçiniz</option>
                 @foreach (var kategori in Model.Kategoriler)
                 {
                     <option value="@kategori.KategoriId">@kategori.KategoriAdi</option>
@@ -53,19 +53,19 @@
 
     <div class="form-group">
         <div>Katılımcı Sayısı</div>
-        <input type="text" asp-for="KatilimciSayisi" class="form-control" />
+        <input type="text" value="@Model.KatilimciSayisi" asp-for="KatilimciSayisi" class="form-control" />
         <span asp-validation-for="KatilimciSayisi"></span>
     </div>
 
     <div class="form-group">
         <div>Başlangıç Tarihi</div>
-        <input type="date" asp-for="BaslangicTarihi" class="form-control" />
+        <input type="date" value="@Model.BaslangicTarihi" asp-for="BaslangicTarihi" class="form-control" />
         <span asp-validation-for="BaslangicTarihi"></span>
     </div>
 
     <div class="form-group">
         <div>Bitiş Tarihi</div>
-        <input type="date" value ="BitisTarihi" asp-for="BitisTarihi" class="form-control" />
+        <input type="date" value ="@Model.BitisTarihi" asp-for="BitisTarihi" class="form-control" />
         <span asp-validation-for="BitisTarihi"></span>
     </div>
 

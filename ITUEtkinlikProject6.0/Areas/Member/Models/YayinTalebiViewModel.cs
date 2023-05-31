@@ -22,6 +22,11 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Models
         public string EtkinlikAdi { get; set; }
 
         public int SalonId { get; set; }
+        public string SalonAdi { get; set; }
+
+        public int KampusId { get; set; }
+
+        public string KampusAdi { get; set; }
 
         public int? KatilimciSayisi { get; set; }
 
@@ -29,8 +34,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Models
 
         public int KategoriId { get; set; }
         public string KategoriAdi { get; set; }
-        public string SalonAdi { get; set; }
-
+       
         public string EtkinlikAciklamasi { get; set; }
 
         public string EtkinlikAciklamasiKisa { get; set; }
