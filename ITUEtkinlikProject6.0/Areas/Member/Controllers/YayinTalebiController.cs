@@ -35,14 +35,16 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             _kampusService  = kampusService;
             _etkinlikService = etkinlikService;
         }
+        //Yayın taleplerinin listelendiği action method
         public IActionResult CurrentYayinTalebi()
         {
             var model = new List<YayinTalebiViewModel>();
+            //_yayinTalebiService.TGetList() yöntemi çağrılarak tüm yayın talepleri alınır.
             var yayinTalepleri = _yayinTalebiService.TGetList();
             var salonlar = _salonService.TGetList();
             var kategoriler = _kategoriService.TGetList();
 
-
+            //Her bir yayın talebi için bir YayinTalebiViewModel örneği oluşturulur ve veriler atanır.
             foreach (var yayintalebi in yayinTalepleri)
             { 
             var yayinTalebi = new YayinTalebiViewModel()
@@ -63,11 +65,12 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                 BitisTarihi = (DateTime)yayintalebi.BitisTarihi,
                 Durum = yayintalebi.Durumu
             };
-            model.Add(yayinTalebi);
+                //Oluşturulan YayinTalebiViewModel örneği, model listesine eklenir.
+                model.Add(yayinTalebi);
         }
             return View(model);
         }
-
+        // Yeni yayın talebi isteği ekranını getiren action method
         [HttpGet]
         public IActionResult NewYayinTalebi()
         {
@@ -86,7 +89,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
 
             return View(model);
         }
-
+        // Yeni yayın talebi isteğini post eden (gönderen) action method
         [HttpPost]
         public IActionResult NewYayinTalebi(YayinTalebiViewModel p)
         {
@@ -108,8 +111,12 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                 }
             }
 
+            //YayinTalebiValidator sınıfı kullanılarak yayinTalebi nesnesinin doğrulama işlemi gerçekleştirilir.
             var validator = new YayinTalebiValidator();
+
+            //validator.Validate(yayinTalebi) yöntemi çağrılarak yayinTalebi nesnesi doğrulanır ve sonuç (result) alınır.
             var result = validator.Validate(yayinTalebi);
+
             if (!result.IsValid)
             {
                 foreach (var error in result.Errors)
@@ -124,18 +131,14 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             return RedirectToAction("member/CurrentYayinTalebi");
         }
 
-        [HttpPost]
-        public JsonResult SalonlariGetir(string kampusId)
-        {
-            var filtrelenmisSalonlar = _salonService.TGetList().Where(x=> x.KampusId == Convert.ToInt32(kampusId)).ToList();
-            
-            return Json(filtrelenmisSalonlar);
-        }
-       
+        //Yayın taleplerinin listelendiği sayfada ilgili yayın talebini silmek için  kullanılan action method
         public ActionResult DeleteYayinTalebi(int yayinTalebiId)
         {
+
+            //yayinTalebiId parametresi kullanılarak _yayinTalebiService.TGetList() yöntemi çağrılır ve belirtilen yayinTalebiId değerine sahip yayın talebini alınır.
             YayinTalebi yayinTalebi = _yayinTalebiService.TGetList().FirstOrDefault(x => x.YayinTalebiId == yayinTalebiId);
 
+            //yayinTalebi null değilse _yayinTalebiService.TDelete(yayinTalebi) yöntemi çağrılır ve yayın talebi silinir.
             if (yayinTalebi != null)
             {
                 _yayinTalebiService.TDelete(yayinTalebi);              
@@ -143,13 +146,17 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             return RedirectToAction("/YayinTalebi/CurrentYayinTalebi", new { Areas = "Member" });
         }
 
+        //Yayın talebinin düzenlendiği sayfayı çağıran action method
         [HttpGet]
         public IActionResult UpdateYayinTalebi(int yayinTalebiId)
         {
+            //Servislerden veriler alınır.
             var yayinTalebi = _yayinTalebiService.TGetById(yayinTalebiId);
             var kampusService = _kampusService.TGetList();
             var salonService = _salonService.TGetList();
             var kategoriService= _kategoriService.TGetList();
+
+            //Değişkenlerden alınan veriler YayinTalebiViewModelQdeki ilgili değişkenlere aktarılır ve modelde saklanır.
             var model = new YayinTalebiViewModel()
             {
                 EtkinlikAciklamasi = yayinTalebi.EtkinlikAciklamasi,
@@ -166,15 +173,21 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                 KategoriAdi = kategoriService.FirstOrDefault(x=>x.KategoriId==yayinTalebi.KategoriId)?.KategoriAdi
 
             };
+
+            //Kampüsler, salonlar ve kategorilerin listelenebilmesi için servislerden ilgili veriler modele aktarılır ve view'e yönlendirilir
             model.Kampusler = _kampusService.TGetList();
             model.Kategoriler = _kategoriService.TGetList();
             model.YayinTalebiIsAdd = "Düzenle";
             return View("NewYayinTalebi", model);
         }
+
+        //Yayın talebi düzenlemelerini yapıldıktan sonra veritabanına post eden method
         [HttpPost]
         public IActionResult UpdateYayinTalebi(YayinTalebiViewModel yayinTalebiCommand)
         {
-           var yayinTalebi =  _yayinTalebiService.TGetList().FirstOrDefault(x => x.YayinTalebiId == yayinTalebiCommand.YayinTalebiId);
+
+            //Database üzerindeki YayınTalebi nesnesinin özellikleri kullanıcıdan gelen yayinTalebiCommand nesnesinin özellikleriyle güncellenir. 
+            var yayinTalebi =  _yayinTalebiService.TGetList().FirstOrDefault(x => x.YayinTalebiId == yayinTalebiCommand.YayinTalebiId);
             yayinTalebi.KatilimciSayisi = yayinTalebiCommand.KatilimciSayisi;
             yayinTalebi.BitisTarihi = yayinTalebiCommand.BitisTarihi;
             yayinTalebi.BaslangicTarihi = yayinTalebiCommand.BaslangicTarihi;
@@ -191,17 +204,23 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                     break;
                 }
             }
+            //_yayinTalebiService.TUpdate(yayinTalebi) kullanılarak güncellenen yayın talebi veritabanına kaydedilir
             _yayinTalebiService.TUpdate(yayinTalebi);
             return View("CurrentYayinTalebi");
         }
 
+        //Belirli bir yayın talebinin detaylarını görüntülemek için kullanılan action method
         [HttpGet]
         public IActionResult YayinTalebiDetails(int id)
         {
+
+            //id parametresiyle ilgili yayın talebi _yayinTalebiService hizmetinden (TGetById yöntemiyle) alınır.
             var yayinTalebi = _yayinTalebiService.TGetById(id);
             var kampusService = _kampusService.TGetList();
             var salonService = _salonService.TGetList();
             var kategoriService = _kategoriService.TGetList();
+
+            //İlgili özellikler YayinTalebiViewModel'e atanır.
             var model = new YayinTalebiViewModel()
             {
                 YayinTalebiId= yayinTalebi.YayinTalebiId,
@@ -220,6 +239,14 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
 
             };
             return View(model);
+        }
+
+        [HttpPost]
+        public JsonResult SalonlariGetir(string kampusId)
+        {
+            var filtrelenmisSalonlar = _salonService.TGetList().Where(x => x.KampusId == Convert.ToInt32(kampusId)).ToList();
+
+            return Json(filtrelenmisSalonlar);
         }
     }
 }

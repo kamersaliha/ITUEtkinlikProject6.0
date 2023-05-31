@@ -7,8 +7,6 @@
 }
 
 
-
-
 <h1>Yayın Talebi</h1>
 <form method="post" asp-action="@action">
     <div class="form-group">
@@ -85,10 +83,10 @@
         switch (isAddMode)
         {
             case "Düzenle":
-                <button class="btn btn-outline-success">Etkinliği Düzenle</button>
+                <button asp-area="member" class="btn btn-outline-success">Etkinliği Düzenle</button>
                 break;
             default:
-                <button class="btn btn-outline-success">Etkinlik Oluştur</button>
+                <button asp-area="Member" asp-controller="YayinTalebi" asp-action="NewYayinTalebi" class="btn btn-outline-success">Etkinlik Oluştur</button>
                 break;
         }   
     }

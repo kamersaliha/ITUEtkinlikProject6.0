@@ -11,11 +11,12 @@ namespace BusinessLayer.ValidationRules
 {
     public class YayinTalebiValidator : AbstractValidator<YayinTalebi>
     {
+        //Constructor method, YayinTalebiValidator örneği oluşturulduğunda doğrulama kurallarının tanımlanmasını sağlar. 
         public YayinTalebiValidator() 
         {
-            RuleFor(x => x.EtkinlikAdi).NotNull().WithMessage("Etkinlik adı boş olamaz!").MaximumLength(100).WithMessage("Etkinlik adını 100 karakterden fazla girmeyiniz!").MinimumLength(5).WithMessage("Etkinlik adını 5 karakterden az girmeyiniz!");
+            //YayinTalebiValidator sınıfının constructor methodu, RuleFor yöntemiyle doğrulama kurallarını belirler.
 
-            //RuleFor(x => x.KampusId).NotNull().WithMessage("Lütfen kampüs seçiniz!");
+            RuleFor(x => x.EtkinlikAdi).NotNull().WithMessage("Etkinlik adı boş olamaz!").MaximumLength(100).WithMessage("Etkinlik adını 100 karakterden fazla girmeyiniz!").MinimumLength(5).WithMessage("Etkinlik adını 5 karakterden az girmeyiniz!");
 
             RuleFor(x => x.SalonId).NotNull().WithMessage("Lütfen etkinlik salonu seçiniz!");
 
@@ -31,6 +32,7 @@ namespace BusinessLayer.ValidationRules
 
             RuleFor(x => x.EtkinlikAciklamasi).NotNull().WithMessage("Etkinlik açıklaması boş olamaz!").MaximumLength(500).WithMessage("Etkinlik açıklamasını 500 karakterden fazla girmeyiniz!").MinimumLength(200).WithMessage("Etkinlik açıklamasını 200 karakterden az girmeyiniz!");
 
+            //int olup olmadığı kontrol edilir
             bool BeNumeric(int? value)
             {
                 if (value == null)
