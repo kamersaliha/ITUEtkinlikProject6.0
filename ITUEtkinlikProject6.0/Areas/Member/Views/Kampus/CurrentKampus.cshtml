@@ -1,0 +1,44 @@
+﻿@model List<KampusViewModel>
+@{
+    ViewData["Title"] = "CurrentKampus";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>Kampüsler</h1>
+<section class="w3l-grids-3 py-5">
+    <div class="container py-md-5">
+        <div class="title-content text-left mb-lg-5 mb-4">
+            <div class="d-lg-block d-none">
+                <a href="/member/Kampus/NewKampus" class="btn btn-style btn-secondary">Yeni Kampüs</a>
+            </div>
+            <h6 class="sub-title">Tüm</h6>
+            <h3 class="hny-title">Kampüsler</h3>
+        </div>
+        <div class="row bottom-ab-grids">
+            <!--/row-grids-->
+            <table class="table table-bordered">
+                <tr>
+                    <th>Kampüs ID</th>
+                    <th>Kampüs Adı</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.KampusId</td>
+                        <td>@item.KampusAdi</td>
+
+
+                        <td><a href="/member/Kampus/updateKampus?KampusId=@item.KampusId" class=" = " btn btn-outline-warning">Güncelle</a></td>
+
+                        <td><a href="/member/Kampus/deleteKampus?KampusId=@item.KampusId" class=" = " btn btn-outline-danger">Sil</a></td>
+
+
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</section>
+
+

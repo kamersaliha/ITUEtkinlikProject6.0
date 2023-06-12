@@ -2,13 +2,14 @@
 @{
     ViewData["Title"] = "NewYayinTalebi";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
+    //YayinTalebiViewModel'de oluşturulan YayinTalebiIsAdd 
     var isAddMode = Model.YayinTalebiIsAdd;
     var action = isAddMode == "Ekle" ? "NewYayinTalebi" : "UpdateYayinTalebi";
 }
 
 
 <h1>Yayın Talebi</h1>
-<form method="post" asp-action="@action">
+<form method="post"  asp-route="/member/yayintalebi/@action">
     <div class="form-group">
         <div>Etkinlik Adı</div>
         <input type="text" asp-for="EtkinlikAdi" class="form-control" />
@@ -83,10 +84,10 @@
         switch (isAddMode)
         {
             case "Düzenle":
-                <button asp-area="member" class="btn btn-outline-success">Etkinliği Düzenle</button>
+                <button class="btn btn-outline-success">Etkinliği Düzenle</button>
                 break;
             default:
-                <button asp-area="Member" asp-controller="YayinTalebi" asp-action="NewYayinTalebi" class="btn btn-outline-success">Etkinlik Oluştur</button>
+                <button  class="btn btn-outline-success">Etkinlik Oluştur</button>
                 break;
         }   
     }

@@ -188,6 +188,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
 
             //Database üzerindeki YayınTalebi nesnesinin özellikleri kullanıcıdan gelen yayinTalebiCommand nesnesinin özellikleriyle güncellenir. 
             var yayinTalebi =  _yayinTalebiService.TGetList().FirstOrDefault(x => x.YayinTalebiId == yayinTalebiCommand.YayinTalebiId);
+            yayinTalebi.EtkinlikAdi = yayinTalebiCommand.EtkinlikAdi;
             yayinTalebi.KatilimciSayisi = yayinTalebiCommand.KatilimciSayisi;
             yayinTalebi.BitisTarihi = yayinTalebiCommand.BitisTarihi;
             yayinTalebi.BaslangicTarihi = yayinTalebiCommand.BaslangicTarihi;
@@ -206,7 +207,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             }
             //_yayinTalebiService.TUpdate(yayinTalebi) kullanılarak güncellenen yayın talebi veritabanına kaydedilir
             _yayinTalebiService.TUpdate(yayinTalebi);
-            return View("CurrentYayinTalebi");
+            return RedirectToAction("CurrentYayinTalebi");
         }
 
         //Belirli bir yayın talebinin detaylarını görüntülemek için kullanılan action method
