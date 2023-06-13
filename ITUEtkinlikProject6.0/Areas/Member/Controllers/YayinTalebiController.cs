@@ -111,20 +111,20 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                 }
             }
 
-            //YayinTalebiValidator sınıfı kullanılarak yayinTalebi nesnesinin doğrulama işlemi gerçekleştirilir.
-            var validator = new YayinTalebiValidator();
+            ////YayinTalebiValidator sınıfı kullanılarak yayinTalebi nesnesinin doğrulama işlemi gerçekleştirilir.
+            //var validator = new YayinTalebiValidator();
 
-            //validator.Validate(yayinTalebi) yöntemi çağrılarak yayinTalebi nesnesi doğrulanır ve sonuç (result) alınır.
-            var result = validator.Validate(yayinTalebi);
+            ////validator.Validate(yayinTalebi) yöntemi çağrılarak yayinTalebi nesnesi doğrulanır ve sonuç (result) alınır.
+            //var result = validator.Validate(yayinTalebi);
 
-            if (!result.IsValid)
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.ErrorMessage);
-                }
-                return View(p);
-            }
+            //if (!result.IsValid)
+            //{
+            //    foreach (var error in result.Errors)
+            //    {
+            //        ModelState.AddModelError("", error.ErrorMessage);
+            //    }
+            //    return View(p);
+            //}
 
             _yayinTalebiService.Tadd(yayinTalebi);
 

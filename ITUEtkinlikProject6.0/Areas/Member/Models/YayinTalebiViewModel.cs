@@ -1,10 +1,13 @@
 ﻿using EntityLayer.Concrete;
+using ITUEtkinlikProject6._0.Areas.Member.Models.ModelMetadataTypes;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Policy;
 
 namespace ITUEtkinlikProject6._0.Areas.Member.Models
 {
+    [ModelMetadataType(typeof(YayinTalebiMetadata))]
     public class YayinTalebiViewModel
     {
         public EntityLayer.Concrete.YayinTalebi YayinTalebi { get; set; }

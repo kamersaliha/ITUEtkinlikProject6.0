@@ -1,7 +1,10 @@
 ﻿using EntityLayer.Concrete;
+using ITUEtkinlikProject6._0.Areas.Member.Models.ModelMetadataTypes;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ITUEtkinlikProject6._0.Areas.Member.Models
 {
+    [ModelMetadataType(typeof(KampusMetadata))]
     public class KampusViewModel
     {
         public EntityLayer.Concrete.Kampus Kampus { get; set; }
