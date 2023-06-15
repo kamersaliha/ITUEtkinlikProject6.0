@@ -129,7 +129,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
 
             _yayinTalebiService.Tadd(yayinTalebi);
 
-            return RedirectToAction("member/CurrentYayinTalebi");
+            return RedirectToAction("CurrentYayinTalebi");
         }
 
         //Yayın taleplerinin listelendiği sayfada ilgili yayın talebini silmek için  kullanılan action method
@@ -144,7 +144,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             {
                 _yayinTalebiService.TDelete(yayinTalebi);              
             }
-            return RedirectToAction("/YayinTalebi/CurrentYayinTalebi", new { Areas = "Member" });
+            return RedirectToAction("CurrentYayinTalebi");
         }
 
         //Yayın talebinin düzenlendiği sayfayı çağıran action method
@@ -213,11 +213,11 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
 
         //Belirli bir yayın talebinin detaylarını görüntülemek için kullanılan action method
         [HttpGet]
-        public IActionResult YayinTalebiDetails(int id)
+        public IActionResult YayinTalebiDetails(int yayinTalebiId)
         {
 
             //id parametresiyle ilgili yayın talebi _yayinTalebiService hizmetinden (TGetById yöntemiyle) alınır.
-            var yayinTalebi = _yayinTalebiService.TGetById(id);
+            var yayinTalebi = _yayinTalebiService.TGetById(yayinTalebiId);
             var kampusService = _kampusService.TGetList();
             var salonService = _salonService.TGetList();
             var kategoriService = _kategoriService.TGetList();
