@@ -8,6 +8,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
 {
     [Area("Member")]
     [AllowAnonymous]
+    [Route("Member/[controller]/[action]")]
     public class KampusController : Controller
     {
         IKampusService _kampusService;

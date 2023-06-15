@@ -18,6 +18,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Models.ModelMetadataTypes
         public string SalonAdi { get; set; }
 
         [Required(ErrorMessage = "Salon kapasitesi boş bırakılamaz!")]
+        [Range(1, 5000000, ErrorMessage = "Salon kapasitesini tekrar giriniz")]
         public int SalonKapasitesi { get; set; }
     }
 }

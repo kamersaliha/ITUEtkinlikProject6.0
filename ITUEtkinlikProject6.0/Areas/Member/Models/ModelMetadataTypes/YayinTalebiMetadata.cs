@@ -14,7 +14,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Models.ModelMetadataTypes
         public string EtkinlikAdi { get; set; }
 
         [Required(ErrorMessage = "Lütfen etkinlik salonu seçiniz!")]
-        public int SalonId { get; set; }
+        public int? SalonId { get; set; }
 
         [Required(ErrorMessage = "Lütfen etkinlik salonu seçiniz!")]
         public string SalonAdi { get; set; }
@@ -29,11 +29,11 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Models.ModelMetadataTypes
         public int KategoriId { get; set; }
 
         [Required(ErrorMessage = "Etkinlik açıklaması boş olamaz!")]
-        [Range(100,500,ErrorMessage = "Etkinlik adı 100 ile 500 karakter arasında olmalıdır!")]
+        [StringLength(500, ErrorMessage = "Etkinlik açıklaması 100 ile 500 karakter arasında olmalıdır!", MinimumLength = 100)]
         public string EtkinlikAciklamasi { get; set; }
 
         [Required(ErrorMessage = "Kısa etkinlik açıklaması boş olamaz!")]
-        [Range(10, 300, ErrorMessage = "Kısa etkinlik açıklaması 10 ile 300 karakter arasında olmalıdır!")]
+        [StringLength(300, ErrorMessage = "Etkinlik açıklaması 10 ile 300 karakter arasında olmalıdır!", MinimumLength = 10)]
         public string EtkinlikAciklamasiKisa { get; set; }
 
         [Required(ErrorMessage = "Lütfen etkinlik başlangıç tarihi seçiniz!")]

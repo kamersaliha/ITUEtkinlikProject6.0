@@ -13,6 +13,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
 {
     [Area("Member")]
     [AllowAnonymous]
+    [Route("Member/[controller]/[action]")]
     public class SalonController : Controller
     {
         ISalonService _salonService;
