@@ -105,6 +105,16 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             return RedirectToAction("CurrentKampus");
         }
 
+        public JsonResult KampusIsExist(string KampusAdi)
+        {
+            var kampusAdi = _kampusService.TGetList().Where(k => k.KampusAdi == KampusAdi).SingleOrDefault();
+            if (kampusAdi != null)
+            {
+                return Json(false);
+            }
+            return Json(true);
+        }
+
 
 
 

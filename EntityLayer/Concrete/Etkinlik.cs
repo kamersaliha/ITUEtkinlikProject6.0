@@ -15,6 +15,7 @@ namespace EntityLayer.Concrete
 
         [Column(TypeName = "nvarchar(50)")]
         public string EtkinlikAdi { get; set; }
+        public string EtkinlikAdiEn { get; set; }
         public int SalonId { get; set; }
         public virtual Salon Salonlar { get; set; }
         public int KatilimciSayisi { get; set; }
@@ -22,9 +23,11 @@ namespace EntityLayer.Concrete
         public virtual Kategori Kategoriler { get; set; }
         public Durumlar Durumu { get; set; }
         public string EtkinlikAciklamasi { get; set; }
+        public string EtkinlikAciklamasiEn { get; set; }
 
         [Column(TypeName = "nvarchar(200)")]
-        public string EtkinlikAciklamasiKisa { get; set; }       
+        public string EtkinlikAciklamasiKisa { get; set; }
+        public string EtkinlikAciklamasiKisaEn { get; set; }
         public string UcretBilgisi { get; set; }
         public DateTime BaslangicTarihi { get; set; }
         public DateTime BitisTarihi { get; set; }

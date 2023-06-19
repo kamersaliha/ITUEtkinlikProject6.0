@@ -108,8 +108,14 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             return RedirectToAction("CurrentKategori");
         }
 
-        
-
-
+        public JsonResult KategoriIsExist(string KategoriAdi)
+        {
+            var kategoriAdi = _kategoriService.TGetList().Where(k => k.KategoriAdi == KategoriAdi).SingleOrDefault();
+            if (kategoriAdi != null)
+            {
+                return Json(false);
+            }
+            return Json(true);
+        }
     }
 }

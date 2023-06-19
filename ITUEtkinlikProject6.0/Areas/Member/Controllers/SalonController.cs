@@ -131,6 +131,16 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
 
             return RedirectToAction("CurrentSalon");
         }
+
+        public JsonResult SalonIsExist(string SalonAdi)
+        {
+            var salonAdi = _salonService.TGetList().Where(s => s.SalonAdi == SalonAdi).SingleOrDefault();
+            if(salonAdi!= null)
+            {
+                return Json(false);
+            }
+            return Json(true); 
+        }
         
     }
 }

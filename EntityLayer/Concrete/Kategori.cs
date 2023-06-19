@@ -18,5 +18,7 @@ namespace EntityLayer.Concrete
 
         [Column(TypeName = "nvarchar(50)")]
         public string KategoriAdi { get; set; }
+
+        public string KategoriAdiEn { get; set; }
     }
 }

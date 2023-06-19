@@ -23,7 +23,7 @@ namespace EntityLayer.Concrete
 
         [Column(TypeName = "nvarchar(50)")]
         public string SalonAdi { get; set; }
-
+        public string SalonAdiEn { get; set; }
         public int SalonKapasitesi { get; set; }
     }
 }

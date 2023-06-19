@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ITUEtkinlikProject6._0.Areas.Member.Models.ModelMetadataTypes
 {
@@ -14,7 +15,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Models.ModelMetadataTypes
         public string KampusAdi { get; set; }
 
         [Required(ErrorMessage = "Salon adı boş bırakılamaz!")]
-        [StringLength(100, ErrorMessage = "Lütfen salon adını en fazla 100 karakter giriniz.")]
+        [StringLength(100, ErrorMessage = "Lütfen salon adını en fazla 100 karakter giriniz.")]        
         public string SalonAdi { get; set; }
 
         [Required(ErrorMessage = "Salon kapasitesi boş bırakılamaz!")]

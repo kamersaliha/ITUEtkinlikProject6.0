@@ -21,6 +21,8 @@ namespace EntityLayer.Concrete
         [Column(TypeName = "nvarchar(50)")]
         public string EtkinlikAdi { get; set; }
 
+        public string EtkinlikAdiEn { get; set; }
+
         public int KampusId { get; set; }
 
         [ForeignKey("KampusId")]
@@ -43,8 +45,12 @@ namespace EntityLayer.Concrete
         [Column(TypeName = "nvarchar(600)")]
         public string? EtkinlikAciklamasi { get; set; }
 
+        public string? EtkinlikAciklamasiEn { get; set; }
+
         [Column(TypeName = "nvarchar(200)")]
         public string? EtkinlikAciklamasiKisa { get; set; }
+
+        public string? EtkinlikAciklamasiKisaEn { get; set; }
 
         public string? UcretBilgisi { get; set; }
 
