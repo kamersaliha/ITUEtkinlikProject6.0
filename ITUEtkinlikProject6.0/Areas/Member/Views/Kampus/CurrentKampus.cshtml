@@ -19,12 +19,14 @@
             <table class="table table-bordered">
                 <tr>
                     <th>Kampüs Adı</th>
+                    <th>İngilizce Kampüs Adı</th>
                 </tr>
 
                 @foreach (var item in Model)
                 {
                     <tr>
                         <td>@item.KampusAdi</td>
+                        <td>@item.KampusAdiEn</td>
 
 
                         <td><a href="/member/Kampus/updateKampus?KampusId=@item.KampusId" class=" = " btn btn-outline-warning">Güncelle</a></td>

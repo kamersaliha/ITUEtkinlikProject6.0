@@ -23,6 +23,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Models
         public int YayinTalebiId { get; set; }
 
         public string EtkinlikAdi { get; set; }
+        public string EtkinlikAdiEn { get; set; }
 
         public int SalonId { get; set; }
         public string SalonAdi { get; set; }
@@ -39,8 +40,10 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Models
         public string KategoriAdi { get; set; }
        
         public string EtkinlikAciklamasi { get; set; }
+        public string EtkinlikAciklamasiEn { get; set; }
 
         public string EtkinlikAciklamasiKisa { get; set; }
+        public string EtkinlikAciklamasiKisaEn { get; set; }
 
         public DateTime BaslangicTarihi { get; set; }
 

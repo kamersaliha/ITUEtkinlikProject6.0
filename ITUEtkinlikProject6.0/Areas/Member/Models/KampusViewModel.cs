@@ -11,6 +11,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Models
         public List<Kampus> Kampusler { get; set; } = new List<Kampus>();
         public int KampusId { get; set; }
         public string KampusAdi { get; set; }
+        public string KampusAdiEn { get; set; }
         public string KampusIsAdd { get; set; }
     }
 }

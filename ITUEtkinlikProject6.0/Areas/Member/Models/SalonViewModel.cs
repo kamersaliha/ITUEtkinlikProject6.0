@@ -14,7 +14,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Models
         public int KampusId { get; set; }
         public string KampusAdi { get; set; }
         public string SalonAdi { get; set; }
-
+        public string SalonAdiEn { get; set; }
         public int SalonKapasitesi { get; set; }
         public string SalonIsAdd { get; set; }
     }

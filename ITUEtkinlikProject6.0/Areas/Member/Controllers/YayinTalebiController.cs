@@ -58,13 +58,16 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                 Kategoriler = kategoriler,
                 YayinTalebiId = yayintalebi.YayinTalebiId,
                 EtkinlikAdi = yayintalebi.EtkinlikAdi,
+                EtkinlikAdiEn = yayintalebi.EtkinlikAdiEn,
                 SalonId = yayintalebi.SalonId,
                 SalonAdi= salonlar.FirstOrDefault(salon => salon.SalonId == yayintalebi.SalonId).SalonAdi,               
                 KategoriId = yayintalebi.KategoriId,
                 KategoriAdi = kategoriler.FirstOrDefault(kategoriler => kategoriler.KategoriId == yayintalebi.KategoriId).KategoriAdi,
                 KatilimciSayisi = yayintalebi.KatilimciSayisi,
                 EtkinlikAciklamasi = yayintalebi.EtkinlikAciklamasi,
+                EtkinlikAciklamasiEn = yayintalebi.EtkinlikAciklamasiEn,
                 EtkinlikAciklamasiKisa = yayintalebi.EtkinlikAciklamasiKisa,
+                EtkinlikAciklamasiKisaEn = yayintalebi.EtkinlikAciklamasiKisaEn,
                 BaslangicTarihi = (DateTime)yayintalebi.BaslangicTarihi,
                 BitisTarihi = (DateTime)yayintalebi.BitisTarihi,
             };
@@ -98,9 +101,12 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         {
             var yayinTalebi = new YayinTalebi();
             yayinTalebi.EtkinlikAciklamasi = p.EtkinlikAciklamasi;
+            yayinTalebi.EtkinlikAciklamasiEn = p.EtkinlikAciklamasiEn;
             yayinTalebi.EtkinlikAdi = p.EtkinlikAdi;
+            yayinTalebi.EtkinlikAdiEn = p.EtkinlikAdiEn;
             yayinTalebi.SalonId = p.SalonId;
             yayinTalebi.EtkinlikAciklamasiKisa = p.EtkinlikAciklamasiKisa;
+            yayinTalebi.EtkinlikAciklamasiKisaEn = p.EtkinlikAciklamasiKisaEn;
             yayinTalebi.KategoriId = p.KategoriId;
             yayinTalebi.KatilimciSayisi = p.KatilimciSayisi;
             yayinTalebi.BaslangicTarihi = p.BaslangicTarihi;
@@ -171,8 +177,11 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             var model = new YayinTalebiViewModel()
             {
                 EtkinlikAciklamasi = yayinTalebi.EtkinlikAciklamasi,
+                EtkinlikAciklamasiEn = yayinTalebi.EtkinlikAciklamasiEn,
                 EtkinlikAciklamasiKisa = yayinTalebi.EtkinlikAciklamasiKisa,
+                EtkinlikAciklamasiKisaEn = yayinTalebi.EtkinlikAciklamasiKisaEn,
                 EtkinlikAdi = yayinTalebi.EtkinlikAdi,
+                EtkinlikAdiEn = yayinTalebi.EtkinlikAdiEn,
                 SalonId = yayinTalebi.SalonId,
                 KategoriId = yayinTalebi.KategoriId,
                 KatilimciSayisi = yayinTalebi.KatilimciSayisi,
@@ -200,11 +209,14 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             //Database üzerindeki YayınTalebi nesnesinin özellikleri kullanıcıdan gelen yayinTalebiCommand nesnesinin özellikleriyle güncellenir. 
             var yayinTalebi =  _yayinTalebiService.TGetList().FirstOrDefault(x => x.YayinTalebiId == yayinTalebiCommand.YayinTalebiId);
             yayinTalebi.EtkinlikAdi = yayinTalebiCommand.EtkinlikAdi;
+            yayinTalebi.EtkinlikAdiEn = yayinTalebiCommand.EtkinlikAdiEn;
             yayinTalebi.KatilimciSayisi = yayinTalebiCommand.KatilimciSayisi;
             yayinTalebi.BitisTarihi = yayinTalebiCommand.BitisTarihi;
             yayinTalebi.BaslangicTarihi = yayinTalebiCommand.BaslangicTarihi;
             yayinTalebi.EtkinlikAciklamasi = yayinTalebiCommand.EtkinlikAciklamasi;
+            yayinTalebi.EtkinlikAciklamasiEn = yayinTalebiCommand.EtkinlikAciklamasiEn;
             yayinTalebi.EtkinlikAciklamasiKisa = yayinTalebiCommand.EtkinlikAciklamasiKisa;
+            yayinTalebi.EtkinlikAciklamasiKisaEn = yayinTalebiCommand.EtkinlikAciklamasiKisaEn;
             yayinTalebi.SalonId = yayinTalebiCommand.SalonId;
             yayinTalebi.KategoriId = yayinTalebiCommand.KategoriId;
 
@@ -242,8 +254,11 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             {
                 YayinTalebiId= yayinTalebi.YayinTalebiId,
                 EtkinlikAciklamasi = yayinTalebi.EtkinlikAciklamasi,
+                EtkinlikAciklamasiEn = yayinTalebi.EtkinlikAciklamasiEn,
                 EtkinlikAciklamasiKisa = yayinTalebi.EtkinlikAciklamasiKisa,
+                EtkinlikAciklamasiKisaEn = yayinTalebi.EtkinlikAciklamasiKisaEn,
                 EtkinlikAdi = yayinTalebi.EtkinlikAdi,
+                EtkinlikAdiEn = yayinTalebi.EtkinlikAdiEn,
                 SalonId = yayinTalebi.SalonId,
                 KategoriId = yayinTalebi.KategoriId,
                 KatilimciSayisi = yayinTalebi.KatilimciSayisi,

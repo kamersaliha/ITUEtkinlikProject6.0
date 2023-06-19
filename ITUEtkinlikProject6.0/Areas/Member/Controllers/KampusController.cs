@@ -37,6 +37,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             var kampus = new Kampus();
             kampus.KampusId = p.KampusId;
             kampus.KampusAdi = p.KampusAdi;
+            kampus.KampusAdiEn = p.KampusAdiEn;
             if (kampus==null)
             {
                 _toast.AddErrorToastMessage("Kampüs eklenemedi!", new ToastrOptions { Title = "Başarısız!" });
@@ -57,7 +58,8 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                 {
                     Kampusler = kampusler,
                     KampusId = item.KampusId,
-                    KampusAdi = item.KampusAdi
+                    KampusAdi = item.KampusAdi,
+                    KampusAdiEn = item.KampusAdiEn
                 };
                 model.Add(kampus);
             }
@@ -84,7 +86,8 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             var model = new KampusViewModel()
             {
                 KampusId = kampusService.KampusId,
-                KampusAdi = kampusService.KampusAdi
+                KampusAdi = kampusService.KampusAdi,
+                KampusAdiEn = kampusService.KampusAdiEn
             };
             model.KampusIsAdd = "Düzenle";
 
@@ -96,6 +99,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         {
             var kampus = _kampusService.TGetList().FirstOrDefault(x => x.KampusId == kampusCommand.KampusId);
             kampus.KampusAdi = kampusCommand.KampusAdi;
+            kampus.KampusAdiEn = kampusCommand.KampusAdiEn;
             if(kampus==null) 
             {
                 _toast.AddErrorToastMessage("Kampüs güncellenemedi!", new ToastrOptions { Title = "Başarısız!" });

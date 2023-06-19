@@ -45,6 +45,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             var salon = new Salon();
             salon.SalonId=p.SalonId;
             salon.SalonAdi = p.SalonAdi;
+            salon.SalonAdiEn = p.SalonAdiEn;
             salon.KampusId= p.KampusId; 
             salon.SalonKapasitesi = p.SalonKapasitesi;
             if (salon == null)
@@ -71,6 +72,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                     Kampusler = kampusler,
                     SalonId = item.SalonId,
                     SalonAdi = item.SalonAdi,
+                    SalonAdiEn = item.SalonAdiEn,
                     KampusId = item.KampusId,
                     KampusAdi = kampusler.FirstOrDefault(kampus => kampus.KampusId == item.KampusId).KampusAdi,
                     SalonKapasitesi=item.SalonKapasitesi
@@ -91,6 +93,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             {
                 SalonId = salon.SalonId,
                 SalonAdi = salon.SalonAdi,
+                SalonAdiEn=salon.SalonAdiEn,
                 KampusId = salon.KampusId,
                 KampusAdi= kampusService.FirstOrDefault(x => x.KampusId == salon.KampusId).KampusAdi,
                 SalonKapasitesi= salon.SalonKapasitesi
@@ -105,6 +108,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         {
             var salon = _salonService.TGetList().FirstOrDefault(x=>x.SalonId == salonCommand.SalonId);
             salon.SalonAdi= salonCommand.SalonAdi;
+            salon.SalonAdiEn = salonCommand.SalonAdiEn;
             salon.SalonKapasitesi = salonCommand.SalonKapasitesi;
             salon.KampusId = salonCommand.KampusId;
             salon.SalonKapasitesi = salonCommand.SalonKapasitesi;

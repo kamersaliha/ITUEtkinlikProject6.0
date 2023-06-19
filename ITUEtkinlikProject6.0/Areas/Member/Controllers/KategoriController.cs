@@ -37,6 +37,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             var kategori = new Kategori();
             kategori.KategoriId = p.KategoriId;
             kategori.KategoriAdi = p.KategoriAdi;
+            kategori.KategoriAdiEn=p.KategoriAdiEn;
             if (kategori == null) 
             {
                 _toast.AddErrorToastMessage("Kategori eklenemedi!", new ToastrOptions { Title = "Başarısız!" });
@@ -58,7 +59,8 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                 {
                     Kategoriler = kategoriler,
                     KategoriId = item.KategoriId,
-                    KategoriAdi = item.KategoriAdi
+                    KategoriAdi = item.KategoriAdi,
+                    KategoriAdiEn= item.KategoriAdiEn,
                 };
                 model.Add(kategori);
             }
@@ -86,7 +88,8 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             var model = new KategoriViewModel()
             {
                 KategoriId = kategoriService.KategoriId,
-                KategoriAdi=kategoriService.KategoriAdi
+                KategoriAdi=kategoriService.KategoriAdi,
+                KategoriAdiEn=kategoriService.KategoriAdiEn
             };
             model.KategoriIsAdd = "Düzenle";
 
@@ -98,6 +101,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         {
             var kategori = _kategoriService.TGetList().FirstOrDefault(x=>x.KategoriId==kategoriCommand.KategoriId);
             kategori.KategoriAdi = kategoriCommand.KategoriAdi;
+            kategori.KategoriAdiEn = kategoriCommand.KategoriAdiEn;
             if(kategori==null)
             {
                 _toast.AddErrorToastMessage("Kategori güncellenemedi!", new ToastrOptions { Title = "Başarısız!" });
