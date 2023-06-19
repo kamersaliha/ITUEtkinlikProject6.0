@@ -9,6 +9,7 @@ using ITUEtkinlikProject6._0.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NToastNotify;
 using YayinTalebiViewModel = ITUEtkinlikProject6._0.Areas.Member.Models.YayinTalebiViewModel;
 
 namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
@@ -27,7 +28,8 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         IKategoriService _kategoriService;
         IKampusService _kampusService;
         IEtkinlikService _etkinlikService;
-        public YayinTalebiController(ISalonService salonService, IKategoriService kategoriService, IYayinTalebiService yayinTalebiService, IKampusService kampusService, IEtkinlikService etkinlikService)
+        IToastNotification _toast;
+        public YayinTalebiController(ISalonService salonService, IKategoriService kategoriService, IYayinTalebiService yayinTalebiService, IKampusService kampusService, IEtkinlikService etkinlikService, IToastNotification toast)
         {
             _yayinTalebiService = yayinTalebiService; // Program.cs'de yaptığımız IoC container'a dependency injection yapılacak olan interface'leri atarak bu yöntem tamamlanmış olur.
             // IoC => Inversion of Control container'ı.
@@ -35,6 +37,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             _kategoriService = kategoriService;
             _kampusService  = kampusService;
             _etkinlikService = etkinlikService;
+            _toast = toast;
         }
         //Yayın taleplerinin listelendiği action method
         public IActionResult CurrentYayinTalebi()
@@ -64,7 +67,6 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                 EtkinlikAciklamasiKisa = yayintalebi.EtkinlikAciklamasiKisa,
                 BaslangicTarihi = (DateTime)yayintalebi.BaslangicTarihi,
                 BitisTarihi = (DateTime)yayintalebi.BitisTarihi,
-                Durum = yayintalebi.Durumu
             };
                 //Oluşturulan YayinTalebiViewModel örneği, model listesine eklenir.
                 model.Add(yayinTalebi);
@@ -102,6 +104,7 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             yayinTalebi.KategoriId = p.KategoriId;
             yayinTalebi.KatilimciSayisi = p.KatilimciSayisi;
             yayinTalebi.BaslangicTarihi = p.BaslangicTarihi;
+            yayinTalebi.BitisTarihi = p.BitisTarihi;
 
             foreach (var salon in _salonService.TGetList())
             {
@@ -126,8 +129,13 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             //    }
             //    return View(p);
             //}
+            if(yayinTalebi == null)
+            {
+                _toast.AddErrorToastMessage("Yayın talebi eklenemedi!", new ToastrOptions { Title = "Başarısız!" });
+            }
 
             _yayinTalebiService.Tadd(yayinTalebi);
+            _toast.AddSuccessToastMessage("Yayın talebi başarıyla eklendi!", new ToastrOptions { Title = "Başarılı!" });
 
             return RedirectToAction("CurrentYayinTalebi");
         }
@@ -140,10 +148,12 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             YayinTalebi yayinTalebi = _yayinTalebiService.TGetList().FirstOrDefault(x => x.YayinTalebiId == yayinTalebiId);
 
             //yayinTalebi null değilse _yayinTalebiService.TDelete(yayinTalebi) yöntemi çağrılır ve yayın talebi silinir.
-            if (yayinTalebi != null)
+            if (yayinTalebi == null)
             {
-                _yayinTalebiService.TDelete(yayinTalebi);              
+                _toast.AddErrorToastMessage("Yayın talebi silinemedi!", new ToastrOptions { Title = "Başarısız!" });
             }
+            _yayinTalebiService.TDelete(yayinTalebi);
+            _toast.AddSuccessToastMessage("Yayın talebi başarıyla silindi!", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("CurrentYayinTalebi");
         }
 
@@ -206,8 +216,13 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
                     break;
                 }
             }
+            if(yayinTalebi == null)
+            {
+                _toast.AddErrorToastMessage("Yayın talebi güncellenemedi!", new ToastrOptions { Title = "Başarısız!" });
+            }
             //_yayinTalebiService.TUpdate(yayinTalebi) kullanılarak güncellenen yayın talebi veritabanına kaydedilir
             _yayinTalebiService.TUpdate(yayinTalebi);
+            _toast.AddSuccessToastMessage("Yayın talebi başarıyla güncellendi!", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("CurrentYayinTalebi");
         }
 

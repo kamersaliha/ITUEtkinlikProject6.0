@@ -8,6 +8,7 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using NToastNotify;
 
 namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
 {
@@ -18,11 +19,13 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
     {
         ISalonService _salonService;
         IKampusService _kampusService;
+        IToastNotification _toast;
 
-        public SalonController(ISalonService salonService, IKampusService kampusService)
+        public SalonController(ISalonService salonService, IKampusService kampusService, IToastNotification toast)
         {
             _salonService = salonService;
             _kampusService = kampusService;
+            _toast = toast;
         }
 
         [HttpGet]
@@ -44,6 +47,11 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             salon.SalonAdi = p.SalonAdi;
             salon.KampusId= p.KampusId; 
             salon.SalonKapasitesi = p.SalonKapasitesi;
+            if (salon == null)
+            {
+                _toast.AddErrorToastMessage("Salon eklenemedi!", new ToastrOptions { Title = "Başarısız!" });
+            }
+            _toast.AddSuccessToastMessage("Salon başarıyla eklendi!", new ToastrOptions { Title = "Başarılı!" });
 
             _salonService.Tadd(salon);
             return RedirectToAction("CurrentSalon");
@@ -100,8 +108,13 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             salon.SalonKapasitesi = salonCommand.SalonKapasitesi;
             salon.KampusId = salonCommand.KampusId;
             salon.SalonKapasitesi = salonCommand.SalonKapasitesi;
+            if(salon==null)
+            {
+                _toast.AddErrorToastMessage("Salon güncellenemedi!", new ToastrOptions { Title = "Başarısız!" });
+            }
             _salonService.TUpdate(salon);
-          
+            _toast.AddSuccessToastMessage("Salon başarıyla güncellendi!", new ToastrOptions { Title = "Başarılı!" });
+
             return RedirectToAction("CurrentSalon");
         }
 
@@ -109,10 +122,12 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         {
             Salon salon = _salonService.TGetList().FirstOrDefault(x=> x.SalonId == salonId);
 
-            if(salon!=null)
+            if(salon==null)
             {
-                _salonService.TDelete(salon);
+                _toast.AddErrorToastMessage("Salon silinemedi!", new ToastrOptions { Title = "Başarısız!" });
             }
+            _salonService.TDelete(salon);
+            _toast.AddSuccessToastMessage("Salon başarıyla silindi!", new ToastrOptions { Title = "Başarılı!" });
 
             return RedirectToAction("CurrentSalon");
         }

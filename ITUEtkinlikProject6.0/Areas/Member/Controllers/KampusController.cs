@@ -3,6 +3,7 @@ using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using ITUEtkinlikProject6._0.Areas.Member.Models;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 
 namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
 {
@@ -12,9 +13,11 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
     public class KampusController : Controller
     {
         IKampusService _kampusService;
-        public KampusController(IKampusService kampusService)
+        IToastNotification _toast;
+        public KampusController(IKampusService kampusService, IToastNotification toast)
         {
             _kampusService = kampusService;
+            _toast = toast;
         }
 
         [HttpGet]
@@ -34,11 +37,12 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
             var kampus = new Kampus();
             kampus.KampusId = p.KampusId;
             kampus.KampusAdi = p.KampusAdi;
-            if (!ModelState.IsValid)
+            if (kampus==null)
             {
-                var messages = ModelState.ToList();
+                _toast.AddErrorToastMessage("Kampüs eklenemedi!", new ToastrOptions { Title = "Başarısız!" });
             }
             _kampusService.Tadd(kampus);
+            _toast.AddSuccessToastMessage("Kampüs başarıyla eklendi!", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("CurrentKampus");
         }
 
@@ -63,10 +67,12 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         public IActionResult DeleteKampus(int kampusId)
         {
             Kampus kampus = _kampusService.TGetList().FirstOrDefault(x => x.KampusId == kampusId);
-            if (kampus != null)
+            if (kampus == null)
             {
-                _kampusService.TDelete(kampus);
+                _toast.AddErrorToastMessage("Kampüs silinemedi!", new ToastrOptions { Title = "Başarısız!" });
             }
+            _kampusService.TDelete(kampus);
+            _toast.AddSuccessToastMessage("Kampüs başarıyla silindi!", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("CurrentKampus");
         }
 
@@ -90,7 +96,12 @@ namespace ITUEtkinlikProject6._0.Areas.Member.Controllers
         {
             var kampus = _kampusService.TGetList().FirstOrDefault(x => x.KampusId == kampusCommand.KampusId);
             kampus.KampusAdi = kampusCommand.KampusAdi;
+            if(kampus==null) 
+            {
+                _toast.AddErrorToastMessage("Kampüs güncellenemedi!", new ToastrOptions { Title = "Başarısız!" });
+            }
             _kampusService.TUpdate(kampus);
+            _toast.AddSuccessToastMessage("Kampüs başarıyla güncellendi!", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("CurrentKampus");
         }
 

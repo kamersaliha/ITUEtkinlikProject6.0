@@ -8,6 +8,7 @@ using FluentValidation.AspNetCore;
 using ITUEtkinlikProject6._0.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using NToastNotify;
 
 namespace ITUEtkinlikProject6._0
 {
@@ -18,7 +19,12 @@ namespace ITUEtkinlikProject6._0
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews()
+                .AddNToastNotifyToastr(new NToastNotify.ToastrOptions()
+                {
+                    PositionClass = ToastPositions.TopRight,
+                    TimeOut = 3000
+                });
 			builder.Services.AddDbContext<Context>();
 			builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
             builder.Services.AddControllersWithViews().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
@@ -57,7 +63,7 @@ namespace ITUEtkinlikProject6._0
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseNToastNotify();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
