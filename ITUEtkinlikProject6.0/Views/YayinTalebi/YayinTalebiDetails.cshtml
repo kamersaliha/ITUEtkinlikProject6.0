@@ -1,8 +1,46 @@
-﻿
+﻿@model YayinTalebiViewModel
 @{
-    ViewData["Title"] = "YayinTalebiDetails";
+    ViewData["Title"] = "Yayin Talebinizin Detayları";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<h1>YayinTalebiDetails</h1>
+<h1>Yayın Talebi</h1>
+<section class="w3l-grids-3 py-5">
+    <div class="container py-md-5">
+        <div class="title-content text-left mb-lg-5 mb-4">
+            <h6 class="sub-title">Tüm</h6>
+            <h3 class="hny-title">Talebiniz ile ilgili tüm ayrıntılar:</h3>
+        </div>
+        <div class="row bottom-ab-grids">
+            <!--/row-grids-->
+            <table class="table table-bordered">
+                <tr>
 
+                    <th>Etkinlik Adı</th>
+                    <th>Kategori Adı</th>
+                    <th>Salon Adı</th>
+                    <th>Katılımcı Sayısı</th>
+                    <th>Kısa Etkinlik Açıklaması</th>
+                    <th>Etkinlik Açıklaması</th>
+                    <th>Etkinlik Başlangıç Tarihi</th>
+                    <th>Etkinlik Bitiş Tarihi</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+
+                    <td>@Model.EtkinlikAdi</td>
+                    <td>@Model.KategoriAdi</td>
+                    <td>@Model.SalonAdi</td>
+                    <td>@Model.KatilimciSayisi</td>
+                    <td>@Model.EtkinlikAciklamasiKisa</td>
+                    <td>@Model.EtkinlikAciklamasi</td>
+                    <td>@Model.BaslangicTarihi</td>
+                    <td>@Model.BitisTarihi</td>
+
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</section>

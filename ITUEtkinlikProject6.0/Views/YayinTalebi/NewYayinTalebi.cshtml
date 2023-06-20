@@ -16,6 +16,11 @@
         <span asp-validation-for="EtkinlikAdi" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <div>Etkinlik Adı İngilizce </div>
+        <input type="text" asp-for="EtkinlikAdiEn" class="form-control" />
+        <span asp-validation-for="EtkinlikAdiEn" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <div class="dropdown show">
             <div> Etkinlik Kampüsü</div>
             <br />
@@ -75,9 +80,21 @@
     </div>
 
     <div class="form-group">
+        <div>Kısa Etkinlik Açıklaması İngilizce</div>
+        <input type="text" value="@Model.EtkinlikAciklamasiKisaEn" asp-for="EtkinlikAciklamasiKisaEn" class="form-control" />
+        <span asp-validation-for="EtkinlikAciklamasiKisaEn"></span>
+    </div>
+
+    <div class="form-group">
         <div> Etkinlik Açıklaması </div>
         <input type="text" value="@Model.EtkinlikAciklamasi" asp-for="EtkinlikAciklamasi" class="form-control" />
         <span asp-validation-for="EtkinlikAciklamasi"></span>
+    </div>
+
+    <div class="form-group">
+        <div> Etkinlik Açıklaması İngilizce </div>
+        <input type="text" value="@Model.EtkinlikAciklamasiEn" asp-for="EtkinlikAciklamasiEn" class="form-control" />
+        <span asp-validation-for="EtkinlikAciklamasiEn"></span>
     </div>
 
     @{

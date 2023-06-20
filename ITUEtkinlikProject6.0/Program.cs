@@ -23,15 +23,7 @@ namespace ITUEtkinlikProject6._0
             // Add services to the container.
 
             builder.Services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
-            builder.Services.AddMvc(options => options.EnableEndpointRouting = false)
-                .AddRazorPagesOptions(options =>
-                {
-                    options.Conventions.AddAreaFolderRouteModelConvention("Member", "/", pageRouteModel =>
-                    {
-                        foreach (var selectorModel in pageRouteModel.Selectors)
-                            selectorModel.AttributeRouteModel.Template = "{culture:culture}/" + selectorModel.AttributeRouteModel.Template;
-                    });
-                })
+            builder.Services.AddMvc()              
                 .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
 
