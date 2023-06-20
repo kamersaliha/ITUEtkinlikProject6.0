@@ -7,8 +7,10 @@ using EntityLayer.Concrete;
 using FluentValidation.AspNetCore;
 using ITUEtkinlikProject6._0.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using NToastNotify;
+using System.Globalization;
 
 namespace ITUEtkinlikProject6._0
 {
@@ -19,6 +21,34 @@ namespace ITUEtkinlikProject6._0
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            builder.Services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
+            builder.Services.AddMvc(options => options.EnableEndpointRouting = false)
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AddAreaFolderRouteModelConvention("Member", "/", pageRouteModel =>
+                    {
+                        foreach (var selectorModel in pageRouteModel.Selectors)
+                            selectorModel.AttributeRouteModel.Template = "{culture:culture}/" + selectorModel.AttributeRouteModel.Template;
+                    });
+                })
+                .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
+
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var culture = new List<CultureInfo> {
+        new CultureInfo("tr"),
+        new CultureInfo("en"),    
+    };
+                //options.DefaultRequestCulture = new RequestCulture(culture[0]);
+                options.DefaultRequestCulture = new RequestCulture("en");
+                options.SupportedCultures = culture;
+                options.SupportedUICultures = culture;
+            });
+
+
+
             builder.Services.AddControllersWithViews()
                 .AddNToastNotifyToastr(new NToastNotify.ToastrOptions()
                 {

@@ -1,4 +1,5 @@
-﻿@model List<KategoriViewModel>
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model List<KategoriViewModel>
 @{
     ViewData["Title"] = "CurrentKategori";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
@@ -19,7 +20,7 @@
             <table class="table table-bordered">
                 <tr>
                 
-                    <th>Kategori Adı</th>
+                    <th>@localizer["Kategori Adı"]</th>
                 </tr>
 
                 @foreach (var item in Model)

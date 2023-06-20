@@ -9,7 +9,7 @@
         //Asenkron JavaScript XML (AJAX) kullanılarak backend'e istek atılıyor
         $.ajax({
             type: "POST",                 // tip'i yazıyorsun. Get, Post, PATCH vb.
-            url: "/Member/YayinTalebi/SalonlariGetir?kampusId="+kampusId, // Backend tarafında istek atacağın url' i yazıyorsun.
+            url: "/YayinTalebi/SalonlariGetir?kampusId="+kampusId, // Backend tarafında istek atacağın url' i yazıyorsun.
             data: kampusId,                   // string türünde datanı gönderiyorsun. !!!
             success: function (data) {   // Backend'den bana geri dönen json türündeki verileri temsil eder.
               /*  debugger;*/

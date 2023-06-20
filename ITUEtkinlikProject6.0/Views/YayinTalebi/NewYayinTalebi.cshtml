@@ -1,0 +1,96 @@
+﻿@model YayinTalebiViewModel
+@{
+    ViewData["Title"] = "NewYayinTalebi";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    //YayinTalebiViewModel'de oluşturulan YayinTalebiIsAdd
+    var isAddMode = Model.YayinTalebiIsAdd;
+    var action = isAddMode == "Ekle" ? "NewYayinTalebi" : "UpdateYayinTalebi";
+}
+
+
+<h1>Yayın Talebi</h1>
+<form method="post" asp-route="/member/yayintalebi/@action">
+    <div class="form-group">
+        <div>Etkinlik Adı</div>
+        <input type="text" asp-for="EtkinlikAdi" class="form-control" />
+        <span asp-validation-for="EtkinlikAdi" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <div class="dropdown show">
+            <div> Etkinlik Kampüsü</div>
+            <br />
+            <select onchange="KampusSec.salonAdiGetir(this);" class="form-select" aria-label="Default select example">
+                <option value="@Model.KampusAdi" selected>Kampüs Seçiniz</option>
+                @foreach (var kampus in Model.Kampusler)
+                {
+                    <option value="@kampus.KampusId">@kampus.KampusAdi</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div>Etkinlik Salonu</div>
+        <select asp-for="SalonId" id="Salonlar" class="form-select" aria-label="Default select example">
+            <option value="@Model.SalonAdi" selected>Lütfen Önce Kampüs Seçiniz</option>
+        </select>
+        <span asp-validation-for="SalonId"></span>
+    </div>
+    <div class="form-group">
+        <div class="dropdown show">
+            <div>Kategoriler</div>
+            <br />
+            <select asp-for="KategoriId" class="form-select" aria-label="Default select example">
+                <option value="@Model.KategoriAdi" selected>Kategori Seçiniz</option>
+                @foreach (var kategori in Model.Kategoriler)
+                {
+                    <option value="@kategori.KategoriId">@kategori.KategoriAdi</option>
+                }
+            </select>
+            <span asp-validation-for="KategoriId"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div>Katılımcı Sayısı</div>
+        <input type="text" value="@Model.KatilimciSayisi" asp-for="KatilimciSayisi" class="form-control" />
+        <span asp-validation-for="KatilimciSayisi"></span>
+    </div>
+
+    <div class="form-group">
+        <div>Başlangıç Tarihi</div>
+        <input type="date" value="@Model.BaslangicTarihi" asp-for="BaslangicTarihi" class="form-control" />
+        <span asp-validation-for="BaslangicTarihi"></span>
+    </div>
+
+    <div class="form-group">
+        <div>Bitiş Tarihi</div>
+        <input type="date" value="@Model.BitisTarihi" asp-for="BitisTarihi" class="form-control" />
+        <span asp-validation-for="BitisTarihi"></span>
+    </div>
+
+    <div class="form-group">
+        <div>Kısa Etkinlik Açıklaması</div>
+        <input type="text" value="@Model.EtkinlikAciklamasiKisa" asp-for="EtkinlikAciklamasiKisa" class="form-control" />
+        <span asp-validation-for="EtkinlikAciklamasiKisa"></span>
+    </div>
+
+    <div class="form-group">
+        <div> Etkinlik Açıklaması </div>
+        <input type="text" value="@Model.EtkinlikAciklamasi" asp-for="EtkinlikAciklamasi" class="form-control" />
+        <span asp-validation-for="EtkinlikAciklamasi"></span>
+    </div>
+
+    @{
+        switch (isAddMode)
+        {
+            case "Düzenle":
+                <button class="btn btn-outline-success">Etkinliği Düzenle</button>
+                break;
+            default:
+                <button class="btn btn-outline-success">Etkinlik Oluştur</button>
+                break;
+        }
+    }
+</form>
+
+<script src="~/js/yayintalebi.js"></script>
