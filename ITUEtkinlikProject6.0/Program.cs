@@ -9,6 +9,7 @@ using ITUEtkinlikProject6._0.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.Localization;
 using NToastNotify;
 using System.Globalization;
 
@@ -22,25 +23,14 @@ namespace ITUEtkinlikProject6._0
 
             // Add services to the container.
 
-            builder.Services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
-            builder.Services.AddMvc()              
-                .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization();
-
-            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            builder.Services.AddLocalization(opt =>
             {
-                var culture = new List<CultureInfo> {
-        new CultureInfo("tr"),
-        new CultureInfo("en"),    
-    };
-                //options.DefaultRequestCulture = new RequestCulture(culture[0]);
-                options.DefaultRequestCulture = new RequestCulture("en");
-                options.SupportedCultures = culture;
-                options.SupportedUICultures = culture;
+                opt.ResourcesPath = "Resources";
             });
 
+            builder.Services.AddMvc().AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();           
 
-
+    
             builder.Services.AddControllersWithViews()
                 .AddNToastNotifyToastr(new NToastNotify.ToastrOptions()
                 {
@@ -48,7 +38,7 @@ namespace ITUEtkinlikProject6._0
                     TimeOut = 3000
                 });
 			builder.Services.AddDbContext<Context>();
-			builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFrameworkStores<Context>();
+			///*builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFramewo*/rkStores<Context>();
             builder.Services.AddControllersWithViews().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
 
             builder.Services.AddSingleton<IYayinTalebiService, YayinTalebiManager>();
@@ -77,6 +67,10 @@ namespace ITUEtkinlikProject6._0
 
 			builder.Services.AddMvc();
 			var app = builder.Build();
+
+            var supportedCultures = new[] { "en", "tr" };
+            var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0]).AddSupportedCultures(supportedCultures).AddSupportedUICultures(supportedCultures);
+            app.UseRequestLocalization(localizationOptions);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

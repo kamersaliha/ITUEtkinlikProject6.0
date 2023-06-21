@@ -1,0 +1,35 @@
+﻿@model KampusViewModel
+@{
+    ViewData["Title"] = "NewKampus";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+    var isAddMode = Model.KampusIsAdd;
+    var action = isAddMode == "Ekle" ? "NewKampus" : "UpdateKampus";
+}
+
+<h1>Kampüs</h1>
+<form method="post" asp-route="/member/yayintalebi/@action">
+    <div class="form-group">
+        <div>Kampüs Adı</div>
+        <input type="text" asp-for="KampusAdi" class="form-control" />
+        <span asp-validation-for="KampusAdi" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <div>İngilizce Kampüs Adı</div>
+        <input type="text" asp-for="KampusAdiEn" class="form-control" />
+        <span asp-validation-for="KampusAdiEn" class="text-danger"></span>
+    </div>
+
+    @{
+        switch (isAddMode)
+        {
+            case "Düzenle":
+                <button class="btn btn-outline-success">Kampüs Düzenle</button>
+                break;
+            default:
+                <button class="btn btn-outline-success">Kampüs Oluştur</button>
+                break;
+        }
+    }
+</form>
+

@@ -1,0 +1,49 @@
+﻿@model List<SalonViewModel>
+@{
+    ViewData["Title"] = "CurrentSalon";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>Salonlar</h1>
+<section class="w3l-grids-3 py-5">
+    <div class="container py-md-5">
+        <div class="title-content text-left mb-lg-5 mb-4">
+            <div class="d-lg-block d-none">
+                <a href="/Salon/NewSalon" class="btn btn-style btn-secondary">Yeni Salon</a>
+            </div>
+            <h6 class="sub-title">Tüm</h6>
+            <h3 class="hny-title">Salonlar</h3>
+        </div>
+        <div class="row bottom-ab-grids">
+            <!--/row-grids-->
+            <table class="table table-bordered">
+                <tr>
+
+                    <th>Salon Adı</th>
+                    <th>Salonun Bulunduğu Kampüs</th>
+                    <th>Salon Kapasitesi</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.SalonAdi</td>
+                        <td>@item.KampusAdi</td>
+                        <td>@item.SalonKapasitesi</td>
+
+
+                        <td><a href="/Salon/updateSalon?SalonId=@item.SalonId" class=" = " btn btn-outline-warning">Güncelle</a></td>
+
+                        <td><a href="/Salon/deleteSalon?SalonId=@item.SalonId" class=" = " btn btn-outline-danger">Sil</a></td>
+
+
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</section>
+
+
+

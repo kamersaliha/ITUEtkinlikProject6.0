@@ -117,22 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Güncelle" xml:space="preserve">
-    <value>Update</value>
-  </data>
   <data name="Kategori Adı" xml:space="preserve">
-    <value>Category Name</value>
+    <value>Kategori Adııııı</value>
   </data>
   <data name="Kategoriler" xml:space="preserve">
-    <value>Categories</value>
-  </data>
-  <data name="Sil" xml:space="preserve">
-    <value>Delete</value>
+    <value>Kategorilerrrr</value>
   </data>
   <data name="Tüm" xml:space="preserve">
-    <value>All</value>
-  </data>
-  <data name="Yeni Kategori" xml:space="preserve">
-    <value>New Category</value>
+    <value>Tümmmm</value>
   </data>
 </root>
