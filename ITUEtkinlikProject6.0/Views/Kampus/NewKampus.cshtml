@@ -1,4 +1,7 @@
-﻿@model KampusViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@model KampusViewModel
 @{
     ViewData["Title"] = "NewKampus";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
@@ -7,10 +10,10 @@
     var action = isAddMode == "Ekle" ? "NewKampus" : "UpdateKampus";
 }
 
-<h1>Kampüs</h1>
+<h1>@Localizer["Kampüs"]</h1>
 <form method="post" asp-route="/member/yayintalebi/@action">
     <div class="form-group">
-        <div>Kampüs Adı</div>
+        <div>@Localizer["Kampüs Adı"]</div>
         <input type="text" asp-for="KampusAdi" class="form-control" />
         <span asp-validation-for="KampusAdi" class="text-danger"></span>
     </div>

@@ -4,6 +4,7 @@ using ITUEtkinlikProject6._0.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using System.Globalization;
 
 namespace ITUEtkinlikProject6._0.Controllers
 {
@@ -12,6 +13,7 @@ namespace ITUEtkinlikProject6._0.Controllers
     {
         IKategoriService _kategoriService;
         IToastNotification _toast;
+
         public KategoriController(IKategoriService kategoriService, IToastNotification toast)
         {
             _kategoriService = kategoriService;

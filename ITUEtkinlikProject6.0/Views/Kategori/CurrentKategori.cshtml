@@ -1,4 +1,7 @@
-﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
 @model List<KategoriViewModel>
 @{
     ViewData["Title"] = "CurrentKategori";
@@ -12,15 +15,15 @@
             <div class="d-lg-block d-none">
                 <a href="/kategori/NewKategori" class="btn btn-style btn-secondary">Yeni Kategori</a>
             </div>
-            <h6 class="sub-title">@localizer["Tüm"]</h6>
-            <h3 class="hny-title">@localizer["Kategoriler"]</h3>
+            <h6 class="sub-title">@Localizer["Tüm"]</h6>
+            <h3 class="hny-title">@Localizer["Kategoriler"]</h3>
         </div>
         <div class="row bottom-ab-grids">
             <!--/row-grids-->
             <table class="table table-bordered">
                 <tr>
 
-                    <th>@localizer["Kategori Adı"]</th>
+                    <th>@Localizer["Kategori Adı"]</th>
                 </tr>
 
                 @foreach (var item in Model)
@@ -30,7 +33,7 @@
                         <td>@item.KategoriAdi</td>
 
 
-                        <td><a href="/kategori/updatekategori?kategoriId=@item.KategoriId" class=" = " btn btn-outline-warning">Güncelle</a></td>
+                        <td><a href="/kategori/updatekategori?kategoriId=@item.KategoriId" class=" = " btn btn-outline-warning">@Localizer["Güncelle"]</a></td>
 
                         <td><a href="/kategori/deletekategori?kategoriId=@item.KategoriId" class=" = " btn btn-outline-danger">Sil</a></td>
 

@@ -9,7 +9,9 @@ using ITUEtkinlikProject6._0.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 using NToastNotify;
 using System.Globalization;
 
@@ -23,20 +25,38 @@ namespace ITUEtkinlikProject6._0
 
             // Add services to the container.
 
-            builder.Services.AddLocalization(opt =>
-            {
-                opt.ResourcesPath = "Resources";
-            });
-
-            builder.Services.AddMvc().AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();           
-
-    
+           
             builder.Services.AddControllersWithViews()
                 .AddNToastNotifyToastr(new NToastNotify.ToastrOptions()
                 {
                     PositionClass = ToastPositions.TopRight,
                     TimeOut = 3000
                 });
+
+            builder.Services.AddControllersWithViews().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+
+            builder.Services.AddLocalization(options =>
+            {
+                options.ResourcesPath = "Resources";
+            });
+
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("tr-TR"),
+                    new CultureInfo("fr")
+
+
+                };
+                options.DefaultRequestCulture = new RequestCulture("en-US");
+                options.SupportedUICultures = supportedCultures;
+                options.SupportedCultures = supportedCultures;
+
+            });
+
+
 			builder.Services.AddDbContext<Context>();
 			///*builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>().AddEntityFramewo*/rkStores<Context>();
             builder.Services.AddControllersWithViews().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
@@ -57,6 +77,7 @@ namespace ITUEtkinlikProject6._0
             builder.Services.AddSingleton<IEtkinlikService, EtkinlikManager>();
             builder.Services.AddSingleton<IEtkinlikDal, EfEtkinlikDal>();
 
+
             builder.Services.AddMvc(config =>
 			{
 				var policy = new AuthorizationPolicyBuilder()
@@ -65,12 +86,16 @@ namespace ITUEtkinlikProject6._0
 				config.Filters.Add(new AuthorizeFilter(policy));
 			});
 
-			builder.Services.AddMvc();
+            //builder.Services.AddLocalization(opt =>
+            //{
+            //    opt.ResourcesPath = "Resources";
+            //});
+
+            builder.Services.AddMvc();/*.AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();*/
+
 			var app = builder.Build();
 
-            var supportedCultures = new[] { "en", "tr" };
-            var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0]).AddSupportedCultures(supportedCultures).AddSupportedUICultures(supportedCultures);
-            app.UseRequestLocalization(localizationOptions);
+           
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -86,6 +111,24 @@ namespace ITUEtkinlikProject6._0
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // var supportedCultures = new[]
+            //{
+            //   new CultureInfo("tr-TR"),
+            //   new CultureInfo("en-US"),
+            //   new CultureInfo("fr")
+            // };
+
+            // var localizationOptions = new RequestLocalizationOptions
+            // {
+            //     DefaultRequestCulture = new RequestCulture("fr"),
+            //     SupportedCultures = supportedCultures,
+            //     SupportedUICultures = supportedCultures,
+            //     FallBackToParentUICultures = true,
+            //     //ApplyCurrentCultureToResponseHeaders = true,              
+            // };
+
+            app.UseRequestLocalization();
 
             app.MapControllerRoute(
                 name: "default",
